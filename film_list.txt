@@ -1,15 +1,15 @@
-Titlu: The Shawshank Redemption (drama)
-Durata: 142 minute
-Varsta minima: 15 ani
+Title: The Shawshank Redemption (Drama)
+Duration: 142 minutes
+Minimum viewing age: 15 ani
 
-Titlu: The Godfather (drama)
-Durata: 175 minute
-Varsta minima: 15 ani
+Title: The Godfather (Drama)
+Duration: 175 minutes
+Minimum viewing age: 15 ani
 
-Titlu: Spirited Away (Animatie)
-Durata: 125 minute
-Limba dublaj: Engleza
+Title: Spirited Away (Animation)
+Duration: 125 minutes
+Dubbing language: English
 
-Titlu: Interstellar (drama)
-Durata: 169 minute
-Varsta minima: 12 ani
+Title: Interstellar (Drama)
+Duration: 169 minutes
+Minimum viewing age: 12 years old
