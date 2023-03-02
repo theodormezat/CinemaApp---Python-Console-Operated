@@ -1,143 +1,148 @@
 import random
+
+
 class Film():
 
-    def __init__(self, titlu, durata, gen):
-        self.titlu = titlu
-        self.durata = durata
-        self.gen = gen
+    def __init__(self, title, duration, genre):
+        self.title = title
+        self.duration = duration
+        self.gen = genre
 
-    def getTitlu(self):
-        return self.titlu
+    def getTitle(self):
+        return self.title
 
-    def getDurata(self):
-        return self.durata
+    def getDuration(self):
+        return self.duration
 
-    def getGen(self):
-        return self.gen
+    def getGenre(self):
+        return self.genre
+
 
 class Drama(Film):
 
-    def __init__(self, titlu, durata, varsta_minima):
-        super().__init__(titlu, durata, "Drama")
-        self.varsta_minima = varsta_minima
+    def __init__(self, title, duration, minimum_age):
+        super().__init__(title, duration, "Drama")
+        self.minimum_age = minimum_age
 
-    def getVarsta_minima(self):
-        return self.varsta_minima
-
-    def __str__(self):
-        afisare = "Titlu: "+ self.titlu + " (drama)\n"
-        afisare += "Durata: " + str(self.durata) + " minute\n"
-        afisare += "Varsta minima: " + str(self.varsta_minima) + " ani\n"
-        return afisare
-
-class Animatie(Film):
-
-    def __init__(self, titlu, durata, dublaj):
-        super().__init__(titlu, durata, "Animatie")
-        self.dublaj = dublaj
-
-    def getDublaj(self):
-        return self.dublaj
+    def getMinimumAge(self):
+        return self.minimum_age
 
     def __str__(self):
-        afisare = "Titlu: "+ self.titlu + " (animatie)\n"
-        afisare += "Durata: " + str(self.durata) + " minute\n"
-        afisare += "Limba dublaj: " + self.dublaj + "\n"
-        return afisare
+        display = "Title: " + self.title + " (Drama)\n"
+        display += "Duration: " + str(self.duration) + " minutes\n"
+        display += "Minimum viewing age: " + str(self.minimum_age) + " years old\n"
+        return display
 
 
-class Cinematograf():
+class Animation(Film):
+
+    def __init__(self, title, duration, dubbing):
+        super().__init__(title, duration, "Animation")
+        self.dubbing = dubbing
+
+    def getDubbing(self):
+        return self.dubbing
+
+    def __str__(self):
+        display = "Title: " + self.title + " (Animation)\n"
+        display += "Duration: " + str(self.duration) + " minutes\n"
+        display += "Dubbing language: " + self.dubbing + "\n"
+        return display
+
+
+class Cinema():
 
     def __init__(self):
-        self._lista_filme = []
+        self._film_list = []
 
-    def adaugare_drama(self, titlu, durata, varsta_minima):
-
-        try:
-            durata_film = int(durata)
-        except:
-            raise ValueError("Valoarea pentru durata filmului nu este valida.")
+    def add_drama(self, title, duration, minimum_age):
 
         try:
-            varsta = int(varsta_minima)
+            film_duration = int(duration)
         except:
-            raise ValueError("Valoarea pentru varsta nu este valida.")
-
-        if durata_film > 180:
-            raise ValueError("Durata filmelor trebuie sa fie de cel mult 180 de minute.")
-
-        drama = Drama(titlu, durata_film, varsta)
-        self._lista_filme.append(drama)
-
-    def adaugare_animatie(self, titlu, durata, dublaj):
+            raise ValueError("The value for film duration is not valid.")
 
         try:
-            durata_film = int(durata)
+            age = int(minimum_age)
         except:
-            raise ValueError("Valoarea pentru durata filmului nu este valida.")
+            raise ValueError("The value for age is not valid.")
 
-        if durata_film > 180:
-            raise ValueError("Durata filmelor trebuie sa fie de cel mult 180 de minute.")
+        if film_duration > 180:
+            raise ValueError("Film duration must be at most 180 minutes.")
 
-        animatie = Animatie(titlu, durata_film, dublaj)
-        self._lista_filme.append(animatie)
+        drama = Drama(title, film_duration, age)
+        self._film_list.append(drama)
 
-    def afisare_filme(self):
+    def add_animation(self, title, duration, dubbing):
 
-        for film in self._lista_filme:
+        try:
+            film_duration = int(duration)
+        except:
+            raise ValueError("The value for film duration is not valid.")
+
+        if film_duration > 180:
+            raise ValueError("Film duration must be at most 180 minutes.")
+
+        animation = Animation(title, film_duration, dubbing)
+        self._film_list.append(animation)
+
+    def display_dramas(self):
+
+        for film in self._film_list:
             print(film)
 
-    def afisare_animatii(self):
+    def display_animations(self):
 
-        for film in self._lista_filme:
-            if film.getGen() == "Animatie":
+        for film in self._film_list:
+            if film.getGen() == "Animation":
                 print(film)
 
-    def alegere_film(self):
-        if len(self._lista_filme) > 0:
-            print(self._lista_filme[random.randint(0,len(self._lista_filme)-1)])
+    def get_random_film(self):
+        if len(self._film_list) > 0:
+            print(self._film_list[random.randint(0, len(self._film_list) - 1)])
         else:
-            print("Nu exista niciun film.")
+            print("No movie is available yet.")
 
-    def salveaza_filme(self, filename):
-        f = open("lista_filme.txt", mode='at', encoding='utf-8')
-        for film in self._lista_filme:
+    def save_movie(self, filename):
+        f = open("film_list.txt", mode='at', encoding='utf-8')
+        for film in self._film_list:
             f.write(str(film) + "\n")
         f.close()
 
+
 if __name__ == "__main__":
-    cinema=Cinematograf()
+    cinema = Cinema()
 
     while True:
-        cmd=input(">>What do you want to do? Type in one of these commands:" '\n'
-                  "1. Add drama" '\n'
-                  "2. Add animation" '\n'
-                  "3. Display list of dramas" '\n'
-                  "4. Display list of animations" '\n'
-                  "5. Choose film" '\n'
-                  "6. Save film" '\n'
-                  ">>")
+        cmd = input(">>What do you want to do? Type in one of these commands:" '\n'
+                    "1. Add drama" '\n'
+                    "2. Add animation" '\n'
+                    "3. Display list of dramas" '\n'
+                    "4. Display list of animations" '\n'
+                    "5. Choose film" '\n'
+                    "6. Save film" '\n'
+                    ">>")
         args = cmd.split(",")
         try:
             if args[0] == "Add drama":
                 if len(args) >= 4:
-                    cinema.adaugare_drama(' '.join(args[1:len(args)-2]), args[len(args)-2], args[len(args)-1])
+                    cinema.add_drama(' '.join(args[1:len(args) - 2]), args[len(args) - 2], args[len(args) - 1])
                 else:
                     raise ValueError("Incomplete number of parameters.")
             elif args[0] == "Add animation":
                 if len(args) >= 4:
-                    cinema.adaugare_animatie(' '.join(args[1:len(args)-2]), args[len(args)-2], args[len(args)-1])
+                    cinema.add_animation(' '.join(args[1:len(args) - 2]), args[len(args) - 2], args[len(args) - 1])
                 else:
                     raise ValueError("Incomplete number of parameters.")
             elif args[0] == "Display list of dramas":
-                cinema.afisare_filme()
+                cinema.display_dramas()
             elif args[0] == "Display_list_of_animations":
-                cinema.afisare_animatii()
+                cinema.display_animations()
             elif args[0] == "Choosefilm":
-                cinema.alegere_film()
+                cinema.get_random_film()
             elif args[0:1] == "Save,film":
                 if len(args) == 3:
-                    cinema.salveaza_filme(args[3])
+                    cinema.save_movie(args[3])
                 else:
                     raise ValueError("Wrong number of parameters.")
             elif args[0] == "exit":
